@@ -1,0 +1,173 @@
+<div style="color: black;" class="card">
+  <div style="font-size:x-large" class="card-header">
+    Create Warrant
+  </div>
+
+  <div class="card-body">
+    <form [formGroup]="warrantForm">
+
+      <div class="justify row">
+        <p>What type of Warrant are you creating?</p>
+        <div class="col-md-3">
+          Market Warrant <span><input type="radio" formControlName="WarrantType" value="MarketWarrant" name="WarrantType"
+              id="WarrantType"></span>
+        </div>
+        <div class="col-md-3">
+          Housing Warrant(general) <span><input type="radio" formControlName="WarrantType" value="HousingWarrant" name="WarrantType"
+              id="WarrantType"></span>
+        </div>
+        <div class="col-md-3">
+          Market Warrant(specific) <span><input type="radio" formControlName="WarrantType" value="MarketWarrantSpecific" name="WarrantType"
+              id="WarrantType"></span>
+        </div>
+        <div class="col-md-3">
+          Share Holding Warrant <span><input type="radio" formControlName="WarrantType" value="ShareholdingWarrant" name="WarrantType"
+              id="WarrantType"></span>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div style="padding-top: 20px; padding-bottom: 20px;">
+        <!-- Amount -->
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label" for="firstNameId">Amount</label>
+          <div class="col-md-8">
+            <input class="form-control" id="" type="text" placeholder="Please enter an amount" formControlName="Amount" />
+          </div>
+        </div>
+
+        <!-- Holder's Name -->
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label" for="firstNameId">Holder's Name</label>
+          <div class="col-md-8">
+            <input class="form-control" id="" type="text" placeholder="Who is the holder" formControlName="HolderName" />
+          </div>
+        </div>
+
+        <!-- Holder's WM ID -->
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label" for="firstNameId">Holder's WM ID</label>
+          <div class="col-md-8">
+            <input class="form-control" id="" type="text" placeholder="Enter holder's ID" formControlName="HolderId" />
+          </div>
+        </div>
+
+        <!-- Receiving Agent -->
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label" for="firstNameId">Receiving Agent</label>
+          <div class="col-md-8">
+            <input class="form-control" id="" type="text" placeholder="Enter receiving agent" formControlName="ReceivingAgent" />
+          </div>
+        </div>
+
+        <!-- Issuing Agent -->
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label" for="firstNameId">Issuing Agent</label>
+          <div class="col-md-8">
+            <input class="form-control" id="" type="text" placeholder="Enter issuing agent" formControlName="IssuingAgent" />
+          </div>
+        </div>
+
+        <!-- Branch Location -->
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label" for="firstNameId">Branch Location</label>
+          <div class="col-md-8">
+            <select class="form-control" formControlName="BranchLocation">
+              <option>Branch 1</option>
+              <option>Branch 2</option>
+              <option>Branch 3</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- !form.form.valid -->
+      <div class="center">
+        <button (click)="onSubmit()" style="width: 100%;" class="btn btn-outline-dark center" type="submit"
+          [disabled]="">
+          Save
+        </button>
+      </div>
+      <div class="back">
+        <button style="width: 100%;" class="btn btn-outline-dark " type="" [disabled]="">
+          Back
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+
+<h1>2nd Assignment</h1>
+
+
+
+
+<!-- EDIT MODAL  -->
+<div style="color: black;" class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{editItem.parameter}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div [formGroup]="listDataForm" class="card form-group">
+          <div style="font-size:x-large; color: black;" class="card-header">
+            {{editItem.parameter}}
+          </div>
+          <div class="card-body">
+            <!-- 1 -->
+            <div class="row mb-2 form-group">
+              <label class="col-md-2 col-form-label">Number</label>
+              <div class="col-md-8"> <input formControlName="number" class="form-control" style="width: 100%;" type="number" />
+              </div>
+            </div>
+            <!-- 2 -->
+            <div class="row mb-2">
+              <label class="col-md-2 col-form-label"> Parameter </label>
+              <div class="col-md-8"> <input formControlName="parameter" style="width: 100%;" type="text" /> </div>
+            </div>
+            <!-- 3 -->
+            <div class="row mb-2">
+              <label class="col-md-2 col-form-label"> Type </label>
+              <div class="col-md-8"> <input formControlName="type" style="width: 100%;" type="text" /> </div>
+            </div>
+            <!-- Description -->
+            <div class="row mb-2">
+              <label class="col-md-2 col-form-label">Description</label>
+              <div class="col-md-8">
+                <textarea formControlName="description" placeholder="Description" style="width: 100%;" rows=3></textarea>
+              </div>
+            </div>
+            <!-- Save Cancel Delete -->
+            <div class="form-group row mb-2">
+              <div class="offset-md-2 col-md-6">
+                <button class="btn btn-primary mr-3" style="width:80px;" type="submit" title="save changes"
+                  (click)="editModalSaveFn()">
+                  Save
+                </button>
+                <button class="btn btn-outline-secondary mr-3" style="width:80px;" type="button" title="Cancel your edits" #closeEditModalDelete
+                  data-bs-dismiss="modal">
+                  Cancel
+                </button>
+                <!-- <button class="btn btn-outline-warning" style="width:80px" type="button" title="Delete these details"
+                  (click)="editModalDeleteFn()">
+                  Delete
+                </button> -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="closeModalView" #closeModalView>Done</button>
+      </div> -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+/* shop-page.component.css */
+
+/* Overall container */
+:host {
+  display: block;
+  padding: 2rem;
+  background-color: #f0f8ff; /* Light blue background */
+  color: #0a2a43; /* Dark blue text */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Heading */
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #0d47a1; /* Stronger blue */
+  border-bottom: 2px solid #64b5f6;
+  padding-bottom: 0.5rem;
+}
+
+/* Toggle Button */
+button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+button:hover {
+  background-color: #1565c0;
+}
+
+/* Product List */
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: start;
+}
+
+/* Individual card styling override if needed */
+app-product-card {
+  background-color: white;
+  border: 1px solid #90caf9;
+  border-radius: 8px;
+  padding: 1rem;
+  width: 200px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease-in-out;
+}
+
+app-product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.2);
+}

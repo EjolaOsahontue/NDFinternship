@@ -1,0 +1,292 @@
+<p>complexity-page works!</p>
+<section class="text">
+  This page would show the same list from testing page, but with more detail including: <br>
+  -- clean up complex form's view and edit 👈  <br>
+  -- validation (new on complex form) ✅   <br>
+  -- pagination (with its indexing)  ✅    <br>
+  -- modals for viewing data.  ✅     <br>
+  -- number to star rating.  ✅     <br>
+  -- form duplication   ✅    <br>
+  -- string filter  ✅     <br>
+  -- list indexes ✅   <br><br><br>
+
+  <p>Complex list is to have an input for star ratings and a display for it. Meaning I may have to change itf interface to IComplexData</p>
+
+  <!-- PREAMBLES END -->
+
+
+  <!-- COMPLEX FORM BEGINS -->
+  <div class="card">
+    <div style="font-size:x-large; color: black;" class="card-header" id="complexForm">
+      List of Data
+    </div>
+    <div style="text-align: center;">
+      <button class="btn btn-outline-danger"  #testbtn
+        style="width: 10%; display:inline-block;">TEST</button>
+      <button class="btn btn-outline-primary" style="width: 10%; display:inline-block;">FILTER</button>
+    </div>
+    <div style="margin-top: 2rem;" class="form-group row mb-2">
+      <label class="col-md-2 col-form-label" for="firstNameId"></label>
+      <div class="col-md-8">
+        <p style="color:black">Please select data to display</p>
+        <select (change)="filterfn(types.value)" #types aria-placeholder="Select data to display" class="form-control">
+          <option value="All" selected>All</option>
+          <option value="Money">Money</option>
+          <option value="Song">Song</option>
+          <option value="Alien">Alien</option>
+          <option value="dataFromBack">dataFromBack</option>
+        </select>
+      </div>
+    </div>
+    <div class="card-body">
+      <button class="btn btn-info newButton" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="resetForm()" >New&ensp;<b>+</b></button>
+      <table style="background-color: rgb(226, 226, 226);" class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">No</th>
+            <th scope="col" style="width: 90px">Serial</th>
+            <th scope="col">Title</th>
+            <th scope="col">Type</th>
+            <th scope="col">Actions</th>
+            <th scope="col">Stars</th>
+
+          </tr>
+        </thead>
+        <tbody *ngIf="listData$ | async as items">
+
+          <tr *ngFor="let item of items; let i = index">
+            <th>{{i + 1}}</th>
+            <th scope="row">{{item.serialNo}}</th>
+            <td class="parameter" >{{item.title}}</td>
+            <td>{{item.type}}</td>
+            <!-- (click)="function()" -->
+            <!-- REMEMBER ROUTERLINK ALWAYS STARTS WITH A /  ALSO SEE HOW ITEM.ID IS BOUND IN THE ROUTERLINK AND THE OMMISSION OF SLASHES AFTER THE FIRST PART-->
+            <td>
+              <div class="actionBtn btn" (click)="getComplexItemForViewingById(item.id)" data-bs-toggle="modal" data-bs-target="#viewModal">View</div>
+              <div class="actionBtn btn" (click)="getComplexItemForViewingById(item.id)" data-bs-toggle="modal" data-bs-target="#editModal">Edit</div>
+              <div class="actionBtn btn" (click)="getComplexItemForViewingById(item.id)" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</div>
+            </td>
+            <td><app-stars [rating]="item.rating"></app-stars></td>
+          </tr>
+
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <td></td>
+            <td colspan="2" style="text-align: center;"></td>
+
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <!-- COMPLEX FORM ENDS -->
+
+
+  <!-- CREATE ITEM Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="color: black;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Create a New Item</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div [formGroup]="complextDataForm" class="card-body">
+              <!-- 1 -->
+              <div class="row mb-2">
+                <label class="col-md-2 col-form-label">Serial <span style="color: red;">*</span></label> <!--validation Here-->
+                <div class="col-md-8"> <input formControlName="serialNo" style="width: 100%;" type="text" placeholder="enter a 4 digit number" /> </div>
+              </div>
+              <!-- 2 -->
+              <div class="row mb-2">
+                <label class="col-md-2 col-form-label"> Title <span style="color: red;">*</span> </label>
+                <div class="col-md-8"> <input formControlName="title" style="width: 100%;" type="text" placeholder="enter title less than 21 characters" /> </div>
+              </div>
+              <!-- 3 -->
+              <div class="row mb-2">
+                <label class="col-md-2 col-form-label"> Type <span style="color: red;">*</span> </label>
+                <div class="col-md-8">
+                  <select #types aria-placeholder="Select type" formControlName="type" class="col-sm-2 form-control">
+                    <option disabled selected>null</option>
+                    <option value="Money">Money</option>
+                    <option value="Song">Song</option>
+                    <option value="Alien">Alien</option>
+                    <option value="dataFromBack">dataFromBack</option>
+                  </select>
+                </div>
+              </div>
+              <!-- Description -->
+              <div class="row mb-2">
+                <label class="col-md-2 col-form-label">Description <span style="color: red;">*</span></label>
+                <div class="col-md-8">
+                  <textarea placeholder="enter item description" formControlName="description" style="width: 100%;" rows=3></textarea>
+                </div>
+              </div>
+              <!-- Rating -->
+              <div class="row mb-2">
+                <label class="col-md-2 col-form-label"> Rating <span style="color: red;">*</span> </label>
+                <div class="col-md-8"> <input formControlName="rating" style="width: 100%;" type="text" placeholder="rate from 1 to 5" /> </div> <!--validation Here-->
+              </div>
+              <!-- Tags -->
+              <div class="row mb-2">
+                <label class="col-md-2 col-form-label"> Tags </label>
+                <div class="col-md-8" formArrayName="tags" *ngFor="let tag of tags.controls; let i = index" >
+                  <div [formGroupName]="i">
+                    <input formControlName="eachTag" style="width: 100%;" type="text" placeholder="enter tag" />
+                  </div>
+                </div>
+                <div class="col-sm-2" style="display: inline; position: relative; bottom: 3px;"><button class="btn btn-outline-dark" (click)="duplicateFn()">+</button></div>
+              </div>
+        <!-- to be removed  -->
+        <!-- <div style="color: black;">
+          <br>Dirty: {{ complextDataForm.dirty }} &nbsp;&nbsp;&nbsp;&nbsp; Touched: {{ complextDataForm.touched }} &nbsp;&nbsp;&nbsp;&nbsp; Valid: {{ complextDataForm.valid }} <br>
+          <br>Value: {{ complextDataForm.value | json }}
+        </div> -->
+        <!-- to be removed end -->
+
+
+            </div>
+          </div>
+                </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeModalDelete" #closeModalDelete>Close</button>
+          <button type="button" class="btn btn-primary" (click)="saveFn()"
+          [disabled]="!complextDataForm.valid"
+          [title]="complextDataForm.valid ? 'Save your complex item' : 'Disabled till complex form input is valid'" >Save changes</button> <!-- This syntax  👈 simply means "is complextDataForm valid? Then" show 'Save your complex item', else show 'Disabled till complex form input is valid' -->
+        </div>
+        <div *ngIf="complextDataForm?.invalid && (complextDataForm?.dirty || complextDataForm?.touched)" class="alert alert-danger">
+          <div >
+              Ensure you followed all the form's rules.
+          </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- VIEW Modal -->
+  <div style="color: black;" class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="vieweModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Item's name</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <h2 style="background-color: rgb(192, 217, 255); justify-content: center; text-align: center; padding-top: 15px; padding-bottom: 15px;" class="row">  {{viewItem?.title}} </h2>
+
+            <div class="row" style="height: 200px;">
+              <div style="background-color: rgb(241, 247, 255); text-align: center; padding-top: 90px;" class="col">
+                {{viewItem?.serialNo}}
+              </div>
+              <div style="background-color: rgb(192, 217, 255); text-align: center; padding-top: 90px;" class="col-6">
+                {{viewItem?.description}}
+              </div>
+              <div style="background-color: rgb(241, 247, 255); text-align: center; padding-top: 90px;" class="col">
+                {{viewItem?.type}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="closeModalView" #closeModalView>Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- EDIT Modal -->
+  <!-- paste code here from removed.html  -->
+
+  <!-- DELETE Modal -->
+  <!-- <div style="color: black;" class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete {{viewItem.title}}?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete {{viewItem.title}}?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeDeleteModalDelete" #closeDeleteModalDelete>Close</button>
+          <button type="button" class="btn btn-primary" (click)="deleteItem()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+
+
+
+  <br><hr> <br>
+<h2>Notes</h2>
+<p> <b>INDEXING</b>: To achieve the indexing of the list, use this syntax in your ngFor: <code class="codeC2">*ngFor="let item of filteredData; let i = index"</code> <br>
+   then where you want the index numbers to be, bind it putting <span class="codeC2">i + 1</span> in double curly braces. </p> <br>
+<h2>Pagination</h2>
+   <p>While the mat-paginator is not in this app due to dependency issues, it's simple to use. Import it in the module's imports section, define the parameters in the ts (resultLength, pageNumber etc) then use the <code>&lt;mat-paginator&gt;&lt;/mat-paginator&gt;</code> html tag, binding the parameters from the ts in the attributes. like so: <br>
+  <span class="codeC2">&lt;mat-paginator #paginator [length]="resultLength" [pageIndex]="pageNumber" [pageSize]="10" &gt;
+  &lt;/mat-paginator&gt;</span> <br>
+  For correct serial indexing, use this *ngIf: <img src="/assets/Images/paginator indexing.png" class="paginatorImg" alt=""> <br>
+<h3 id="slicePagination">Pagination with pageSlice</h3>
+<p>
+  This is the best method of pagination and the one you're most likely to use. <br>
+  This method involves working with the "<code class="codeC2">pageSlice</code>" object, which is basically defining the section (slice) of the array you want to be displayed per page of the ngFor loop. That defined section (slice) alone would show and on the next page, the next section (slice) would show and so on. Your ngFor would then show "<code class="codeC2">let item of pageSlice</code>" <br>
+  Below is how you define and populate the pageSlice. <br>
+</p>
+<img class="paginatorImg" src="/assets/Images/pageSlice explanation.png" alt="">
+
+
+<p>Be sure to define all the necessary parameters in the ts like pageSize, pageNumber etc to be passed into the getIndex function in the html: <br>
+   <img class="paginatorImg" src="/assets/Images/pagination serial 2.png" alt="">    <br>
+   This works given the index and pageNumber start counting from 0. Adpat accordingly if they start from 1. <br>
+   the <code class="codeC2">onPageChange</code> fn is event bound to the 'page' attribute of the mat-paginator tag so that as the page changes, the indexes (item numbering) would change accordingly.
+</p>
+<p><b>Important:</b><br>
+   -- The pageSize and pageNumber (of component.ts) in this case should NOT go into the service.ts get function (they're only for the getIndex fn of component.ts and the mat-paginator tag of the html) because we're doing client side pagination here. <br>
+   -- Lastly, ensure that from the service.ts get fn, the pageSize (this is the one Swagger would use) is set to a number so high the user isn't likely to have that number of entries in the database like 1000000.</p>
+<br><br>
+
+<h1>Server Side Pagination</h1><hr>
+<p>Carefully read and use the below steps for server side pagination (knowing client side pagination is a prerequisite).</p>
+<ol>
+  <li> Properly define these three:  &nbsp;&nbsp;  pageSize: number = X;  &nbsp;&nbsp;  pageNumber: number = X;  &nbsp;&nbsp;  resultLength: number; <br>
+    These are the values that'll go to Swagger (by passing them into your <code class="codeC2">service.getDataById</code> fn), <b>those same objects</b> would be bound to the html appropriately (in the mat-paginator tag), so <b><code class="">they have to be defined in the component.ts file</code></b> (NOT the service.ts file this time). <br>
+    pageSize and pageNumber are going to Swagger, then in the html are the mat-paginator tag's pageSize and pageIndex respectively. resultLength is the res.totalElements from Swagger.
+</li> <br>
+<li> Define paginator in viewchild. <br>
+<img src="/assets/Images/paginator in viewChild.png" alt="" class="paginatorImg">
+then add <code class="codeC2">#paginator</code> to the mat-paginator tag.</li> <br>
+<li> In ngAfterViewInit, subscribe to the paginator and re-populate your ngFor object. <br>
+<img src="/assets/Images/afterViewInit to make pagination worl.png" alt="" class="paginatorImg"></li>
+<li>The indexing is the same as client side pagination.</li>
+</ol>
+
+
+
+
+<!-- CODE FOR USING PAGINATION WITH CORRECT INDEXING -->
+<!-- <ul>
+  <li *ngFor="let item of collection | paginate: { itemsPerPage: 10, currentPage: page };index as i">
+      <span *ngIf="page==1">{{(i+1)}}{{item}}</span>
+      <span *ngIf="page>1">{{((page-1)*10)+(i+1)}}{{ item }}</span>
+  </li>
+</ul> -->
+
+
+
+
+
+
+</section>
+<!-- <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="alert alert-danger">
+  <div *ngIf="password?.errors?.['required']">
+      Password is required.
+  </div>
+</div> -->

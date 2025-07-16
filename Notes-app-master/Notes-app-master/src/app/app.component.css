@@ -1,0 +1,116 @@
+body{
+  /* background-color: rgb(59, 59, 61); */
+  padding: 1rem 6rem;
+  background-image: url("https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+  footer{
+    margin-top: 14rem;
+    }
+
+.content-section{
+  padding: 1rem 6rem;
+  background-color: #f2e8d0;
+}
+
+.test-btn {
+  color: rgb(223, 223, 255);
+}
+/* .content{
+  background-image: url("https://image.shutterstock.com/image-illustration/abstract-connected-dots-technology-concept-600w-580895215.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 700px;
+  width: 100%;
+} */
+
+.dummyText{
+  text-align: center;
+  color: greenyellow;
+}
+
+.text{
+  color: aliceblue;
+}
+
+.sec {
+  color: greenyellow;
+  background-color: blue;
+}
+
+.cetner-btn{
+  color: rgb(0, 37, 69);
+  background-color: rgb(148, 169, 221);
+  text-align:center;
+  border-radius: 50px;
+}
+.cetner-btn:hover{
+  color: rgb(232, 244, 255);
+  background-color: bisque;
+}
+.frame{
+  width: 60%;
+  min-height: fit-content;
+  margin-right: 40%;
+  border: 2px solid;
+  border-left: 6px solid #005282;
+  padding: 1rem;
+  background-color: azure;
+  /* OVERFLOW BELOW MAKES IT SCROLL */
+  overflow-x: scroll;
+  overflow-y: auto;
+}
+.frame-full{
+  width: 100%;
+  min-height: fit-content;
+  margin-right: 40%;
+  border: 2px solid;
+  border-left: 6px solid #005282;
+  padding: 1rem;
+  background-color: azure;
+  /* OVERFLOW BELOW MAKES IT SCROLL */
+  overflow-x: scroll;
+  overflow-y: auto;
+}
+.comment{
+  color: rgb(190, 190, 190);
+}
+
+
+.link {
+  color: bisque;
+}
+.link:hover{
+  color: yellow;
+}
+
+.codeC2 {
+  color: yellow;
+}
+.blue{
+  color: #005282;
+}
+.green {
+  color: rgb(95, 177, 12);
+}
+.red{
+  color: #d63384;
+}
+.comment{
+  color: rgb(190, 190, 190);;
+}
+.green2{
+  color: rgb(0, 157, 157);
+}
+
+img{
+  border-radius: 1rem;
+  margin-bottom: 4rem;
+}
+.img{
+  width: 60%;
+  height: 400px;
+}

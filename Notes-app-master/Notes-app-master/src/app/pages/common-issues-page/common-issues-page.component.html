@@ -1,0 +1,219 @@
+<p>common-issues-page works!</p>
+<div class="card">
+  <div class="card-header">
+    <h1 style="text-align: center;">About This Page</h1>
+  </div>
+  <div class="card-body">
+    <div style="text-align: center; font-weight: bold; color: rgb(17, 17, 50);">
+      This page is meant to <span class="blue">record common errors</span> that one may encounter, and <span class="blue">how-tos</span> of some certain things that may be tricky. <br>
+      Do a "<span class="blue">ctrl + F</span>" search for a keyword in the error message you got. <br>
+      <P style="font-weight: 300; color: rgb(17, 17, 50);">For example, if you're experiencing "<span class="blue">error 405: put not supported</span>", press "<span class="blue">ctrl + F</span>" and then search for the word "<span class="blue">put</span>". That would cause a search through the keywords on the error list and take you to the errors that feature that word. That way, you can find the specific error you want to read about if it's here, without doing much scrolling.</P>
+    </div>
+  </div>
+</div>
+<br>
+
+  <section>
+    <!-- ACCORDION FORMAT, just make a new toggle function and active object for each -->
+    <div>
+      <button class="accordion" (click)="toggleAccordion1()">
+        <h5>Title <span style="font-weight: 200;">[format of each dropdown]</span></h5>
+      </button>
+      <div class="dark" *ngIf="active1 == true">
+        <div class="text">
+          <h5 class="subheading">Issue</h5>: Content.
+          <br>
+          <hr><br>
+          <h5 class="subheading">Solution</h5>: Content "<span class="issue">problem</span>" and "<span
+            class="solution">solution</span>"".
+        </div>
+        <br>
+      </div>
+    </div>
+    <hr>
+    <!-- Typescript error cannot find type of undefined reading -->
+    <div>
+      <button class="accordion" (click)="toggleAccordion2()">
+        <h5>TypeScript Error Cannot Find Properties of Undefined Reading X</h5>
+      </button>
+      <div class="dark" *ngIf="active2 == true">
+        <div class=" text">
+          <h5 class="subheading">Issue</h5>: for some reason, the data on my list stopped showing when I bound the
+          viewItem.stuff to the view
+          modal. I removed the binding and it showed again.
+          <br>
+          <hr><br>
+          <h5 class="subheading">Solution</h5>: that happened because of "<span class="issue">typeScript Error cannot find
+            properties of undefined reading viewItem.stuff</span>". This
+          is because I <span class="issue">didn't define the viewItem.stuff specifically in the ts</span>. To avoid this,
+          <span class="solution">define the relevant variable in the ts file (and set its value where necessary)</span> it
+          can also be avoided by simply writing <span class="solution">viewItem?.stuff</span>.
+        </div>
+        <br>
+      </div>
+    </div>
+    <hr>
+
+    <!-- Error 405: PUT Not Supported -->
+    <div>
+      <button class="accordion" (click)="toggleAccordion3()">
+        <h5>Error 405: PUT Not Supported</h5>
+      </button>
+      <div class="dark" *ngIf="active3 == true">
+        <div class="text">
+          <h5 class="subheading">Issue</h5>: I was trying an edit operation, but I was getting "<span class="issue">error
+            405 put not supported</span>". My code to edit was correct, but I kept getting that error.
+          <br>
+          <hr><br>
+          <h5 class="subheading">Solution</h5>: when you get <span class="issue">error 405 "put not supported"</span>, it
+          looks like a backend error but it's possible that <span class="issue">you didn't write/build the link
+            properly</span>. <span class="solution">Copy the actual link from the response body where you tested the
+            endpoint, not from the way the link is written in the documentation and ensure you've built the link
+            well</span>.
+        </div>
+        <br>
+      </div>
+    </div>
+    <hr>
+
+    <!-- Post Image Issue  -->
+    <div>
+      <button class="accordion" (click)="toggleAccordion4()">
+        <h5>FormData must be multi-part error</h5>
+      </button>
+      <div class="dark" *ngIf="active4 == true">
+        <div class="text">
+            <h5 class="subheading">Issue</h5>: I was trying to post an image to a backend server in a post operation (and in the second instance an edit operation), but it kept failing and telling me <span class="issue">the content-type must be multipart</span>. I specified that in my service file's post request, but it then asked for the "boundary", which is not something I can specify by myself to the best of my knowledge. It's a backend string that the code generates under the hood.
+            <br>
+            <hr><br>
+            <h5 class="subheading">Solution</h5>: Instead of calling the post function in the service file, I did a work around where <span class="solution">I made the server request in the ts file</span>. <br>
+            -- I first <span class="solution">captured the image</span> from the upload image event, then in the same post function, I <span class="solution">made new FormData and appended the image to it</span>. <br>
+            -- I then made the create request right there in the ts file, passing in the FormData. <br>
+            -- Be careful of the formData.append syntax that you properly pass in the name, value, fileName respectively like so <span class="solution">formData.append(name, value, filename)</span><br>
+            Below is an image of the code: <br>
+              <img src="/assets/Images/post bypassing multipart error.png" alt=""> <br>
+              <h6>In The Edit Operation:</h6> I also encountered this issue in a put operation, and the solution was the same, but this time I appended the image to it only if the image exists, then properly captured the relevant ID (to edit by) and passed in the FormData.
+              <img src="/assets/Images/Using formData to escape multipart error.png" alt=""> <br>
+        </div>
+        <br>
+      </div>
+    </div>
+    <hr>
+    <!-- Post Image Issue  -->
+    <div>
+      <button class="accordion" (click)="toggleAccordion5()">
+        <h5>Property 'observableName$' has no initializer and is not definitely assigned in the constructor</h5>
+      </button>
+      <div class="dark" *ngIf="active5 == true">
+        <div class="text">
+            <h5 class="subheading">Issue</h5>: in defining an observable, I got <span class="issue">Property 'products$' has no initializer and is not definitely assigned in the constructor</span>. This may occur when defining an observable.
+            <br>
+            <hr><br>
+            <h5 class="subheading">Solution</h5>:
+            -- Add <span class="solution">| undefined</span> after the observable definition.
+        </div>
+        <br>
+      </div>
+    </div>
+    <hr>
+
+    <!-- Mapping Issue  -->
+    <div>
+      <button class="accordion" (click)="toggleAccordion6()">
+        <h5>Property 'parameterName' does not exist on type 'IDataInterface[]'</h5>
+      </button>
+      <div class="dark" *ngIf="active6 == true">
+        <div class="text">
+            <h5 class="subheading">Issue</h5>: the data shape of my data was such that I had an array but needed to access data inside the array for each item of my ngFor loop. I was getting an array of type arrayType[] but <span class="issue">I needed to access a parameter inside this array of objects</span> (for data binidng or whatever else). This may occur when your data shape isn't what you expected.
+            <br>
+            <hr><br>
+            <h5 class="subheading">Solution</h5>:
+            -- Instead of item.parameterName, make it <span class="solution">item.map(x => x.parameterName)</span>. This would make the code go into the array, pick the necessary parameter and map them to where you want them to be. It'll do this for everytime that item appears in the objects of the array.
+        </div>
+        <br>
+      </div>
+    </div>
+    <hr>
+
+    <!-- Subscribe doesn't exist Issue  -->
+    <div>
+      <button class="accordion" (click)="toggleAccordion7()">
+        <h5>Property 'subscribe' does not exist on type 'void'</h5>
+      </button>
+      <div class="dark" *ngIf="active7 == true">
+        <div class="text">
+            <h5 class="subheading">Issue</h5>: I was trying to subscribe and kept getting <span class="issue">Property 'subscribe' does not exist on type 'void'</span> whenever I used .subscribe.
+            <br>
+            <hr><br>
+            <h5 class="subheading">Solution</h5>:
+            -- In the service file, <span class="solution">I added 'return' before this.http</span>. Making it return something. If not, it'd have kept returning void. I also added a type of Observable &lt;any&gt;
+        </div>
+        <br>
+      </div>
+    </div>
+    <hr>
+
+    <!-- Can't bind to 'formGroup' since it isn't a known property of 'div'  -->
+    <div>
+      <button class="accordion" (click)="toggleAccordion8()">
+        <h5>Can't bind to 'formGroup' since it isn't a known property of 'div'</h5>
+      </button>
+      <div class="dark" *ngIf="active8 == true">
+        <div class="text">
+            <h5 class="subheading">Issue</h5>: I was trying to bind a form group to the html but it said <span class="issue">Can't bind to 'formGroup' since it isn't a known property of 'div'</span>.
+            <br>
+            <hr><br>
+            <h5 class="subheading">Solution</h5>:<br>
+              -- In the relevant module file, <span class="solution">add an import of ReactiveFormsModule, and FormsModule</span>. <br>
+              -- In another instance of the same error, if the component involved is a standalone component, adding the import of ReactiveFormsModule, and FormsModule in the relevant module won't work. You have to <span class="solution">go to the ts file and under @Component add imports:[ FormsModule, ReactiveFormsModule ]</span>.
+        </div>
+        <br>
+      </div>
+    </div>
+    <hr>
+
+      <!-- Unexpected token '??='  -->
+      <div>
+        <button class="accordion" (click)="toggleAccordion9()">
+          <h5>Unexpected token '??='</h5>
+        </button>
+        <div class="dark" *ngIf="active9 == true">
+          <div class="text">
+              <h5 class="subheading">Issue</h5>: I was trying to run an app but it threw <span class="issue">Unexpected token '??='</span>.
+              <img src="/assets/Images/node wrong version error.png" alt="">
+              <br>
+              <hr><br>
+              <h5 class="subheading">Solution</h5>:<br>
+                -- Your node version is wrong, <span class="solution">update node</span>. <br>
+          </div>
+          <br>
+        </div>
+      </div>
+      <hr>
+
+
+
+      <!--Typescript: Type 'string | undefined' is not assignable to type 'string'  -->
+      <div>
+        <button class="accordion" (click)="toggleAccordion10()">
+          <h5>Typescript: Type 'string | undefined' is not assignable to type 'string'</h5>
+        </button>
+        <div class="dark" *ngIf="active10 == true">
+          <div class="text">
+              <h5 class="subheading">Issue</h5>: I noticed some part of my code from Keycloak, userProfile.firstName underlined and it threw <span class="issue">Typescript: Type 'string | undefined' is not assignable to type 'string'</span>.
+              <img src="" alt="">
+              <br>
+              <hr><br>
+              <h5 class="subheading">Solution</h5>:<br>
+                -- The property was made optional in Keycloak's internal node module code, so <span class="solution">add the non-null assertion operator, which is just an exclamation (like so userProfile.firstName!)</span>. It tells TypeScript that even though something looks like it could be null, it can trust you that it's not. <br>
+          </div>
+          <br>
+        </div>
+      </div>
+      <hr>
+
+
+
+    <button class="collapseBtn" (click)="toggleCollapse()">{{collapsed ? "Close" : "Collapse"}}</button>
+    <div (click)="backToTop()" class="backToTopBtn" style="color: aliceblue;">^</div>
+  </section>

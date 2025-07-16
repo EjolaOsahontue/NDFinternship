@@ -1,0 +1,10 @@
+<h2>Shop Page</h2>
+
+<button (click)="toggleProducts()">Toggle Products</button>
+
+<div *ngIf="showProducts" class="product-list">
+  <app-product-card 
+    *ngFor="let product of products" 
+    [productName]="product.name">
+  </app-product-card>
+</div>
