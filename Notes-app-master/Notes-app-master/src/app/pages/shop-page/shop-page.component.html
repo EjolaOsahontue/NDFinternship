@@ -1,10 +1,44 @@
-<h2>Shop Page</h2>
+<div class="shop-container">
+  <div class="crud-section">
+    <h2>{{ isEditing ? 'Edit Product' : 'Add Product' }}</h2>
+    
+    <div *ngIf="!isEditing">
+      <input [(ngModel)]="newProduct.name" placeholder="Product name">
+      <input [(ngModel)]="newProduct.price" type="number" placeholder="Price">
+      <input [(ngModel)]="newProduct.description" placeholder="Description">
+      <input [(ngModel)]="newProduct.imageUrl" placeholder="Image URL">
+      <button (click)="addProduct()">Add Product</button>
+    </div>
+    
+    <div *ngIf="isEditing && selectedProduct">
+      <input [(ngModel)]="selectedProduct.name">
+      <input [(ngModel)]="selectedProduct.price" type="number">
+      <input [(ngModel)]="selectedProduct.description">
+      <input [(ngModel)]="selectedProduct.imageUrl">
+      <button (click)="updateProduct()">Update</button>
+      <button (click)="isEditing = false">Cancel</button>
+    </div>
+  </div>
 
-<button (click)="toggleProducts()">Toggle Products</button>
+  <div class="products-section">
+    <h2>Products</h2>
+    <div class="products-grid">
+      <app-product-card 
+        *ngFor="let product of (productService.products$ | async)"
+        [product]="product"
+        (selected)="selectProduct($event)"
+        (deleted)="deleteProduct($event)">
+      </app-product-card>
+    </div>
+  </div>
 
-<div *ngIf="showProducts" class="product-list">
-  <app-product-card 
-    *ngFor="let product of products" 
-    [productName]="product.name">
-  </app-product-card>
+  <div *ngIf="selectedProduct && !isEditing" class="product-details">
+    <h3>Details</h3>
+    <img [src]="selectedProduct.imageUrl" [alt]="selectedProduct.name">
+    <h4>{{ selectedProduct.name }}</h4>
+    <p>{{ selectedProduct.description }}</p>
+    <p>Price: N{{ selectedProduct.price }}</p>
+    <button (click)="editProduct()">Edit</button>
+    <button (click)="selectedProduct = null">Close</button>
+  </div>
 </div>

@@ -14,10 +14,12 @@ import { FormsModule } from '@angular/forms';
 import { AmenitiesComponent } from './components/amenities/amenities.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     AmenitiesComponent,
+    
     
   ],
   imports: [

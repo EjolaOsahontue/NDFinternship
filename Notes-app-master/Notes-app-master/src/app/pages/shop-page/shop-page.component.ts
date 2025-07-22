@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-shop-page',
@@ -6,15 +7,51 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./shop-page.component.css']
 })
 export class ShopPageComponent {
-  showProducts = true;
+  newProduct = {
+    name: '',
+    price: 0,
+    description: '',
+    imageUrl: ''
+  };
+  selectedProduct: any = null;
+  isEditing = false;
 
-  products = [
-    { name: 'Sweats', rating: 4 },
-    { name: 'Tank Top', rating: 3 },
-    { name: 'Skully', rating: 5 }
-  ];
+  constructor(public productService: ProductService) {}
 
-  toggleProducts() {
-    this.showProducts = !this.showProducts;
+  addProduct() {
+    if (this.newProduct.name && this.newProduct.price) {
+      this.productService.addProduct(this.newProduct);
+      this.resetForm();
+    }
+  }
+
+  selectProduct(product: any) {
+    this.selectedProduct = product;
+    this.isEditing = false;
+  }
+
+  editProduct() {
+    this.isEditing = true;
+  }
+
+  updateProduct() {
+    if (this.selectedProduct) {
+      this.productService.updateProduct(this.selectedProduct);
+      this.selectedProduct = null;
+      this.isEditing = false;
+    }
+  }
+
+  deleteProduct(id: number) {
+    this.productService.deleteProduct(id);
+  }
+
+  resetForm() {
+    this.newProduct = {
+      name: '',
+      price: 0,
+      description: '',
+      imageUrl: ''
+    };
   }
 }
