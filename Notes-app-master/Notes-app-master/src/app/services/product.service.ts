@@ -15,8 +15,8 @@ interface Product {
 })
 export class ProductService {
   private products: Product[] = [
-    { id: 1, name: 'Sweats', price: 30000, rating: 4, description: 'High-quality comfortable sweatpants', imageUrl: '' },
-    { id: 2, name: 'Polo', price: 45000, rating: 5, description: 'Siezed sights polo', imageUrl: '' }
+    { id: 1, name: 'Sweats', price: 30000, rating: 4, description: 'High-quality comfortable sweatpants', imageUrl: 'https://placehold.co/300x200?text=Sweats' },
+    { id: 2, name: 'Polo', price: 45000, rating: 5, description: 'Siezed sights polo', imageUrl: 'https://placehold.co/300x200?text=Polo' }
   ];
 
   private productsSubject = new BehaviorSubject<Product[]>(this.products);
@@ -25,7 +25,7 @@ export class ProductService {
   addProduct(product: Omit<Product, 'id'>) {
     const newProduct = {
       ...product,
-      id: Math.max(...this.products.map(p => p.id)) + 1
+      id: Math.max(0, ...this.products.map(p => p.id)) + 1
     };
     this.products = [...this.products, newProduct];
     this.productsSubject.next(this.products);

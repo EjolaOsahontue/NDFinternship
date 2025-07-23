@@ -13,20 +13,26 @@ export class ShopPageComponent {
     description: '',
     imageUrl: ''
   };
+  
   selectedProduct: any = null;
   isEditing = false;
+  showCreateModal = false;
+  showDeleteModal = false;
+  productToDelete: number | null = null;
 
   constructor(public productService: ProductService) {}
 
+  // Regular CRUD methods
   addProduct() {
     if (this.newProduct.name && this.newProduct.price) {
       this.productService.addProduct(this.newProduct);
       this.resetForm();
+      this.showCreateModal = false;
     }
   }
 
   selectProduct(product: any) {
-    this.selectedProduct = product;
+    this.selectedProduct = {...product};
     this.isEditing = false;
   }
 
@@ -42,8 +48,20 @@ export class ShopPageComponent {
     }
   }
 
-  deleteProduct(id: number) {
-    this.productService.deleteProduct(id);
+  confirmDelete(id: number) {
+    this.productToDelete = id;
+    this.showDeleteModal = true;
+  }
+
+  deleteProduct() {
+    if (this.productToDelete) {
+      this.productService.deleteProduct(this.productToDelete);
+      this.showDeleteModal = false;
+      this.productToDelete = null;
+      if (this.selectedProduct?.id === this.productToDelete) {
+        this.selectedProduct = null;
+      }
+    }
   }
 
   resetForm() {
